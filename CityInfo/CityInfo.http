@@ -1,0 +1,50 @@
+@CityInfo_HostAddress = https://localhost:7160
+@schema=https
+@hostname=localhost
+@port=7160
+
+GET {{schema}}://{{hostname}}:{{port}}/api/v2/cities
+
+###
+GET {{schema}}://{{hostname}}:{{port}}/api/v2/cities
+Accept: application/xml
+
+###
+POST {{schema}}://{{hostname}}:{{port}}/api/v2/cities/1/pointsofinterest
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name": "Test for .http file with a new Point of Interest",
+  "description": "Test .http file description of the new point of interest."
+}
+
+// get a token
+###
+POST {{schema}}://{{hostname}}:{{port}}/api/authentication/authenticate
+Content-Type: application/json
+
+{
+  "username": "bobtomato",
+  "password": "testpassword"
+}
+
+// authenticated GET request with token
+###
+GET {{schema}}://{{hostname}}:{{port}}/api/v2/cities
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZ2l2ZW5fbmFtZSI6IkJvYiIsImZhbWlseV9uYW1lIjoiVG9tYXRvIiwiY2l0eSI6IkFudHdlcnAiLCJuYmYiOjE3NzgxMDg1NDcsImV4cCI6MTc3ODExMjE0NywiaXNzIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NzE2MCIsImF1ZCI6ImNpdHlpbmZvYXBpIn0.YYwncHd5N9atz4SMFT9RGuoHkefZUgIKUpvk-AcUFhI
+POST {{CityInfo_HostAddress}}/api/authentication/authenticate
+Authorization: Bearer {{$bearerToken}}
+Content-Type: application/json
+
+{
+  //AuthenticationRequestBody
+}
+
+###
+
+@name=string
+@searchQuery=string
+GET {{CityInfo_HostAddress}}/api/v{version:apiVersion}/cities?name={{name}}&searchQuery={{searchQuery}}
+
+###
